@@ -1,62 +1,64 @@
 import React, { useState } from 'react'
+import { PropTypes } from 'prop-types'
 import styled from '@emotion/styled'
 import { Field } from './field'
 import { InputField } from './input-field'
 import { initializeReminder } from './utils'
 import { breakpoint, lgreen, dgreen, lgrey } from './theme'
 
-export const Stage2 = ({ setStage, reminder, setReminder }) => {
 
-    const Wrapper = styled.div`
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;een;
-    `
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;een;
+`
 
-    const GridWrapper = styled.div`
-        display: grid;
-        width: 90%;            
-        grid-row-gap: 30px;
+const GridWrapper = styled.div`
+    display: grid;
+    width: 90%;            
+    grid-row-gap: 30px;
 
-        @media (min-width: ${breakpoint}) {
-            width: 100%;            
-            grid-template-columns: 500px;    
-        }
-    `
+    @media (min-width: ${breakpoint}) {
+        width: 100%;            
+        grid-template-columns: 500px;    
+    }
+`
 
-    const ButtonWrapper = styled.div`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        
-        @media (min-width: ${breakpoint}) {
-            width: 100%;
-            flex-grow: 1;
-            flex-direction: row;    
-            justify-content: space-between;
-        }
-    `
-    const Button = styled.button`
-        order: ${props => props.primary ? 1 : 2};
+const ButtonWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (min-width: ${breakpoint}) {
         width: 100%;
-        height: 60px;
-        margin-top: 20px;
-        font-size: 1.4em;
-        color: ${props => props.primary ? "white" : lgreen};
-        background-image: linear-gradient(${props => props.primary ? lgreen : "white"}, ${props => props.primary ? dgreen : "white"});
-        border: 2px solid ${lgreen};
-        border-radius: 1000px;
-        outline: none;
+        flex-grow: 1;
+        flex-direction: row;    
+        justify-content: space-between;
+    }
+`
+const Button = styled.button`
+    order: ${props => props.primary ? 1 : 2};
+    width: 100%;
+    height: 60px;
+    margin-top: 20px;
+    font-size: 1.4em;
+    color: ${props => props.primary ? "white" : lgreen};
+    background-image: linear-gradient(${props => props.primary ? lgreen : "white"}, ${props => props.primary ? dgreen : "white"});
+    border: 2px solid ${lgreen};
+    border-radius: 1000px;
+    outline: none;
 
-        @media (min-width: ${breakpoint}) {
-            order: ${props => props.primary ? 2 : 1};
-            width: 220px;
-            height: 80px;
-            margin-top: 50px;
-            font-size: 1.8em;
-        }
-    `
+    @media (min-width: ${breakpoint}) {
+        order: ${props => props.primary ? 2 : 1};
+        width: 220px;
+        height: 80px;
+        margin-top: 50px;
+        font-size: 1.8em;
+    }
+`
+
+export const Stage2 = ({ setStage, reminder, setReminder }) => {
 
     const submitReminder = () => {
         // TODO: send reminder data to backend
@@ -101,4 +103,10 @@ export const Stage2 = ({ setStage, reminder, setReminder }) => {
             </ButtonWrapper>
         </Wrapper>
     )
+}
+
+Stage2.propTypes = {
+    setReminder: PropTypes.func.isRequired,
+    setStage: PropTypes.func.isRequired,
+    reminder: PropTypes.object.isRequired,
 }

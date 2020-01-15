@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { PropTypes } from 'prop-types'
 import styled from '@emotion/styled'
 import { breakpoint, borderRadius, lgrey, errorColor, fieldHMargin } from './theme'
 import { fieldStatus } from './utils'
@@ -68,4 +69,10 @@ export const Field = props => {
             }
         </Wrapper>
     )
+}
+
+Field.propTypes = {
+    errorMessage: PropTypes.string,
+    fieldStatus: PropTypes.number,
+    isValid: PropTypes.bool,
 }

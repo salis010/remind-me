@@ -5,19 +5,21 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "npm": "^6.10.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.23",
     "emotion-theming": "^10.0.19",
+    "express": "^4.17.1",
+    "npm": "^6.10.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "styled-system": "^5.1.2"
   },
   "devDependencies": {
@@ -25,6 +27,7 @@
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "jest": "^24.9.0",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5"
   }

@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import { PropTypes } from 'prop-types'
 import styled from '@emotion/styled'
 import { Field } from './field'
 import { Dropdown } from './dropdown'
 import { InputField } from './input-field'
 import { lgreen, dgreen, lgrey, breakpoint } from './theme'
 import { isDateValid, isEmailValid, isDropDownValueValid } from './utils'
+import { getCategories } from './get-categories'
+import { getProviders } from './get-providers'
 
-const options = [
-    { value: 1, text: "One" },
-    { value: 2, text: "Two" },
-    { value: 3, text: "Three" },
-]
-
-const Wrapper = styled.div`
+const Wrapper = styled.div`    
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 90%;
 
@@ -24,13 +22,12 @@ const Wrapper = styled.div`
 `
 
 const FieldWrapper = styled.div`
-    display: grid;
-    grid-column-gap: 30px;
+    display: grid;    
     grid-row-gap: 30px;
     margin-top: 20px;
 
     @media (min-width: ${breakpoint}) {
-        margin-top: 20px;
+        grid-column-gap: 30px;
         grid-template-columns: 480px 480px;    
     }
 `
@@ -55,9 +52,13 @@ const Button = styled.button`
 
 export const Stage1 = ({ setStage, reminder, setReminder }) => {
 
+    const [categories, setCategories] = useState([{value: -1, text: "Loading data..."}])
+    const [providers, setProviders] = useState([{value: -1, text: "Loading data..."}])
+    const [selectedCategory, setSelectedCategory] = useState(reminder.category.id || null)
     const [validForm, setValidForm] = useState(false)
             
     const validateForm = () => {
+        
         setValidForm(
             reminder.category.isValid && 
             reminder.provider.isValid && 
@@ -66,55 +67,40 @@ export const Stage1 = ({ setStage, reminder, setReminder }) => {
         )
     }
 
+
     useEffect(() => { 
         validateForm()
     }, [])
 
+
+    useEffect(() => {
+        if(reminder.category.id != null) {
+            getCategories().then(data => setCategories(data))            
+        }
+    }, [])
+
+
+    useEffect(() => {
+        if(selectedCategory != null) {
+            getProviders(selectedCategory).then(data => setProviders(data))       
+        }
+        
+    }, [selectedCategory])
+
+
     const setFormValues = (name, object) => { 
         
         setReminder({...reminder, [name]: object})
-        
+                
         validateForm()            
     }
+
 
     const goToConfirmationStage = () => {
         
         setStage(2)
     }
-
-    // const validateForm = () => {
-        
-    //     let validFields = 0;
-        
-    //     if(reminder.category.isValid) {
-    //         validFields++
-    //     } else {
-    //         setFormValues("category", {value: reminder.category.value, status: fieldStatus.userLeftField, isValid: false})
-    //     }
-
-    //     if(reminder.provider.isValid) {
-    //         validFields++
-    //     } else {
-    //         setFormValues("provider", {value: reminder.provider.value, status: fieldStatus.userLeftField, isValid: false})
-    //     }
-
-    //     if(reminder.expiryDate.isValid) {
-    //         validFields++
-    //     } else {
-    //         setFormValues("expiryDate", {value: reminder.expiryDate.value, status: fieldStatus.userLeftField, isValid: false})
-    //     }
-
-    //     if(reminder.email.isValid) {
-    //         validFields++
-    //     } else {
-    //         setFormValues("email", {value: reminder.email.value, status: fieldStatus.userLeftField, isValid: false})
-    //     }
-        
-    //     //setValidForm(Object.keys(values).length === validFields)
-    // }
-
-   
-
+    
     return (
         <Wrapper>
             <FieldWrapper>
@@ -122,17 +108,19 @@ export const Stage1 = ({ setStage, reminder, setReminder }) => {
                     <Dropdown 
                         name="category" 
                         placeholder="Kategorie wahlen" 
-                        options={options} 
+                        options={categories} 
                         data={reminder.category} 
                         setFormValues={setFormValues}
+                        setSelectedCategory={setSelectedCategory}
                         validator={isDropDownValueValid}
                     />
                 </Field>
                 <Field fieldStatus={reminder.provider.status} isValid={reminder.provider.isValid} errorMessage="Error: select an option">
                     <Dropdown 
-                        name="provider" 
-                        placeholder="Arbieter wahlen" 
-                        options={options} 
+                        name="provider"
+                        disabled={selectedCategory == null ? true : false} 
+                        placeholder={selectedCategory == null ? "Select category first" : "Arbieter wahlen"} 
+                        options={providers} 
                         data={reminder.provider} 
                         setFormValues={setFormValues}
                         validator={isDropDownValueValid}
@@ -160,4 +148,10 @@ export const Stage1 = ({ setStage, reminder, setReminder }) => {
             <Button disabled={!validForm} onClick={goToConfirmationStage}>Erinnerung erstellen</Button>
         </Wrapper>
     )
+}
+
+Stage1.propTypes = {
+    setReminder: PropTypes.func.isRequired,
+    setStage: PropTypes.func.isRequired,
+    reminder: PropTypes.object.isRequired,
 }

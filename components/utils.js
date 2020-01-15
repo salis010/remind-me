@@ -1,11 +1,13 @@
 export const initializeReminder = () => (
     {
         category: { 
+            id: '', 
             value: '',
             status: fieldStatus.notVisited,
             isValid: false,
         },
         provider: { 
+            id: '', 
             value: '',
             status: fieldStatus.notVisited,
             isValid: false,
@@ -40,10 +42,11 @@ export const isDateValid = strDate => {
     const day = parseInt(arr[0])
     const month = parseInt(arr[1] - 1)
     const year = parseInt(arr[2])
+    const currentYear = new Date().getFullYear()
 
     if( !((day >= 1 && day <= 31)
         && (month >= 0 && month <= 11)
-        && (year >= 2020 && year <= 2040)) ) {
+        && (year >= currentYear && year <= 2040)) ) {
             return false
         }
 

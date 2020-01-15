@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { PropTypes } from 'prop-types'
 import styled from '@emotion/styled'
 import { breakpoint, lgrey, dgrey, fieldHMargin } from './theme'
 import { fieldStatus } from './utils'
@@ -57,7 +58,7 @@ export const InputField = props => {
 
         props.setFormValues(event.target.name, { value: event.target.value, status: status, isValid: props.data.isValid })        
     }
-
+    
     return (
         <Wrapper>
             <Label>{props.label}</Label>
@@ -70,4 +71,12 @@ export const InputField = props => {
             /> 
         </Wrapper>
     )
+}
+
+InputField.propTypes = {
+    data: PropTypes.shape({
+        isValid: PropTypes.bool.isRequired
+    }),
+    setFormValues: PropTypes.func,
+    validator: PropTypes.func,
 }

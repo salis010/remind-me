@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { breakpoint, lgreen } from './theme'
 
-const H1 = styled.h1`
+const H1 = styled.h1`    
     font-size: 2em;
     text-align: center;
     margin-top: 50px;

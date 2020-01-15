@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { PropTypes } from 'prop-types'
 import styled from '@emotion/styled'
 import { breakpoint, lgreen, dgreen, dgrey } from './theme'
 
@@ -39,4 +40,8 @@ export const Stage3 = props => {
             <Button onClick={() => props.setStage(1)}>Set a new reminder</Button>
         </Wrapper>
     )
+}
+
+Stage3.propTypes = {
+    setStage: PropTypes.func.isRequired,
 }

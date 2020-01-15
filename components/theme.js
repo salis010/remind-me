@@ -1,0 +1,8 @@
+export const breakpoint = "1000px"
+export const dgreen = "RGB(136, 202, 55)"
+export const lgreen = "RGB(183, 226, 84)"
+export const lgrey = "RGB(200, 200, 200)"
+export const dgrey = "RGB(120, 120, 120)"
+export const errorColor = "RGB(177, 45, 45)"
+export const borderRadius = "12px"
+export const fieldHMargin = "30px"

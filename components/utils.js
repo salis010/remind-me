@@ -31,7 +31,7 @@ export const fieldStatus = {
     userLeftField: 2,
 }
 
-// The below is not robust at all, a library like date-fns should be used or else a more thorough implementation
+// The below is not robust at all, a library like date-fns should be used or else a more thorough implementation should be considered
 export const isDateValid = strDate => {
     
     if(strDate.length < 8 || strDate.length > 10) {
